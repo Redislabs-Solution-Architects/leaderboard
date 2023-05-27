@@ -21,7 +21,7 @@
 
     <div class="container">
       <div class="py-5 text-center">
-        <h2><i class="bi bi-person-circle"></i>&nbsp;Add new player</h2>
+        <h2><i class="bi bi-person-circle"></i>&nbsp;Join the game</h2>
       </div>
 
       <div class="row">
@@ -31,36 +31,43 @@
           <form class="needs-validation" action="/add-player" method="post" novalidate >
             <div class="row">
 
+              <div class="col-md-6 mb-3"></div>
+
               <div class="col-md-6 mb-3">
-                <label for="firstName">Player full name (first name followed by last name)</label>
-                <input type="text" class="form-control" id="firstName" name="firstName" placeholder="" value="" required>
+                <label for="playerName">Your full name (first name followed by last name)</label>
+                <input type="text" class="form-control" id="playerName" name="playerName" placeholder="" value="" required>
                 <div class="invalid-feedback">
                   Please provide a valid name.
                 </div>
               </div>
 
+              <div class="col-md-6 mb-3"></div>
+
               <div class="col-md-6 mb-3">
-                <label for="lastName">User name</label>
-                <input type="text" class="form-control" id="lastName" name="lastName" placeholder="" value="" required>
+                <label for="username">Display name/User name</label>
+                <input type="text" class="form-control" id="username" name="username" placeholder="" value="" required>
                 <div class="invalid-feedback">
                   This will be your player name/user name
                 </div>
               </div>
+
+              <div class="col-md-6 mb-3"></div>
 
 			  <div class="col-md-6 mb-3">
                 <label for="age">Age</label>
                 <input type="number" class="form-control" id="age" name="age" placeholder="" value="">
               </div>
 
-                <hr class="mb-4">
-                 <div class="col-md-6 mb-3">
+              <div class="col-md-6 mb-3"></div>
+
+              <div class="col-md-6 mb-3">
                 <input class="btn btn-primary btn-lg btn-block" type = "submit" value="Save">
               </div>
 
 <!--              <div class="col-md-6 mb-3">-->
 <!--                <a class="btn btn-primary btn-lg btn-block" href="/" >All users</a>-->
 <!--              </div>-->
-s
+
             </div>
 
           </form>

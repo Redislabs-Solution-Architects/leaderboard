@@ -21,7 +21,8 @@ sock = Sock(app)
 location = os.getenv('LOCATION', "A")
 
 
-@app.route('/new-player')
+
+@app.route('/')
 def newplayer():
     return render_template('add-player.html')
 
@@ -34,10 +35,11 @@ def adduser():
     r.json().set("player:" + username, "$", profile)
     return redirect(url_for('overview', username=username))
 
-@app.route('/')
+@app.route('/overview')
 def overview():
     username = request.args.get('username')
-    profile = r.json().get("player:" + username)
+    if username is None:
+        username = ''
     return render_template('overview.html', username=username)
 
 
@@ -45,8 +47,8 @@ def overview():
 def price(sock, username):
     print(username)
     profile = r.json().get("player:" + username)
-    name = ''
-    location = ''
+    name = profile['profile']
+    location = profile['location']
     score = ''
     while True:
         data = json.dumps(
