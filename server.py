@@ -74,6 +74,18 @@ def price(sock, username):
         sock.send(data)
         time.sleep(3)
 
+@sock.route('/players')
+def price(sock, username):
+    print(username)
+    profile = r.json().get("player:" + username)
+    name = profile['name']
+    location = profile['location']
+    score = 100
+    while True:
+        data = json.dumps(
+            {"name": name, "username": username, "location": location, "score": score})
+        sock.send(data)
+        time.sleep(3)
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', debug=True, port=5555)
