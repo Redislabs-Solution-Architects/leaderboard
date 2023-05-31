@@ -33,12 +33,17 @@
             <li class="nav-item active">
                 <a class="nav-link" href="#">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>Player profile</span></a>
+                    <span>Player profile [Location: {{location}}]</span></a>
             </li>
 
             <!-- Divider -->
             <hr class="sidebar-divider">
 
+            <li class="nav-item active">
+                <a class="nav-link" href="/leaderboard">
+                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <span>Leaderboard</span></a>
+            </li>
 
         </ul>
         <!-- End of Sidebar -->
@@ -135,7 +140,7 @@
     <!-- Custom scripts for all pages-->
     <script src="{{ url_for('static', filename = 'js/sb-admin-2.min.js') }}"></script>
 
-    <script src="{{ url_for('static', filename = 'js/demo/game.js') }}"></script>
+    <script src="{{ url_for('static', filename = 'js/demo/player.js') }}"></script>
 
 
 </body>
