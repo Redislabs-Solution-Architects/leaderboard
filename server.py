@@ -80,30 +80,40 @@ def playerMetadata(sock, username):
 
 @sock.route('/players')
 def getActivePlayers(sock):
-    players = r.sscan("game:1", cursor=0, count=2)
-    cur = players[0]
-    playerList = players[1]
-    while cur != 0:
-        for p in playerList:
-            profile = r.json().get(p)
-            data = json.dumps({"username": profile['username'], "location": profile['location']})
-            sock.send(data)
-        players = r.sscan("game:1", cursor=cur, count=2)
+    while True:
+        players = r.sscan("game:1", cursor=0, count=2)
         cur = players[0]
         playerList = players[1]
+        while cur != 0:
+            for p in playerList:
+                profile = r.json().get(p)
+                data = json.dumps({"username": profile['username'], "location": profile['location']})
+                sock.send(data)
+            players = r.sscan("game:1", cursor=cur, count=2)
+            cur = players[0]
+            playerList = players[1]
+
+        if cur == 0 and len(playerList) > 0:
+            for p in playerList:
+                profile = r.json().get(p)
+                data = json.dumps({"username": profile['username'], "location": profile['location']})
+                sock.send(data)
+        time.sleep(10)
+        sock.send(json.dumps({"_NODATA": "_NODATA"}))
 
 
 @sock.route('/game/01/leaderboard')
 def getLeaderboard(sock):
-    lb = r.zrange("leaderboard", start=0, end=9, desc=True, withscores=True)
-    i = 0
-    while i < len(lb):
-        #arg = lb[i]
-        #val = ''.join(map(str, arg))
-        val = list(lb[i])
-        data = json.dumps({"player": val[0], "score": val[1]})
-        sock.send(data)
-        i += 1
+    while True:
+        lb = r.zrange("leaderboard", start=0, end=9, desc=True, withscores=True)
+        i = 0
+        while i < len(lb):
+            val = list(lb[i])
+            data = json.dumps({"player": val[0], "score": val[1]})
+            sock.send(data)
+            i += 1
+        time.sleep(5)
+        sock.send(json.dumps({"_NODATA": "_NODATA"}))
 
 
 if __name__ == '__main__':
