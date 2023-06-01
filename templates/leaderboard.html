@@ -54,7 +54,12 @@
             <li class="nav-item active">
                 <a class="nav-link" href="#">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>Sample leaderboard application</span></a>
+                    <span>Sample </br>leaderboard application</span></a>
+            </li>
+
+            <li class="nav-item active">
+                <a class="nav-link" href="/">
+                    <span>Play now</span></a>
             </li>
 
             <!-- Divider -->
@@ -78,7 +83,8 @@
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">[Location: {{location}}]</span>
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Location</span>
+                                <span class="badge rounded-pill bg-warning text-dark">{{location}}</span>&nbsp;
                                 <img class="img-profile rounded-circle"
                                     src="{{ url_for('static', filename = 'img/undraw_profile.svg') }}">
                             </a>
