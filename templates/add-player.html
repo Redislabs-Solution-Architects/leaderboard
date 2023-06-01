@@ -21,7 +21,8 @@
 
     <div class="container">
       <div class="py-5 text-center">
-        <h2><i class="bi bi-person-circle"></i>&nbsp;Join the game [Location: {{location}}]</h2>
+        <h2><i class="bi bi-person-circle"></i>&nbsp;Join the game </h2>
+        <h5>Location: {{location}}</h5>
       </div>
 
       <div class="row">
@@ -34,7 +35,7 @@
               <div class="col-md-6 mb-3"></div>
 
               <div class="col-md-6 mb-3">
-                <label for="playerName">Your full name (first name followed by last name)</label>
+                <label for="playerName">Your full name* <br/>(first name followed by last name)</label>
                 <input type="text" class="form-control" id="playerName" name="playerName" placeholder="" value="" required>
                 <div class="invalid-feedback">
                   Please provide a valid name.
@@ -44,7 +45,7 @@
               <div class="col-md-6 mb-3"></div>
 
               <div class="col-md-6 mb-3">
-                <label for="username">Display name/User name</label>
+                <label for="username">Display name/User name*</label>
                 <input type="text" class="form-control" id="username" name="username" placeholder="" value="" required>
                 <div class="invalid-feedback">
                   This will be your player name/user name
@@ -64,9 +65,11 @@
                 <input class="btn btn-primary btn-lg btn-block" type = "submit" value="Save">
               </div>
 
-<!--              <div class="col-md-6 mb-3">-->
-<!--                <a class="btn btn-primary btn-lg btn-block" href="/" >All users</a>-->
-<!--              </div>-->
+              <div class="col-md-6 mb-3"></div>
+
+              <div class="col-md-6 mb-3">
+                <a class="btn btn-lg btn-block" href="/leaderboard" >Leaderboard</a>
+              </div>
 
             </div>
 

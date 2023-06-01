@@ -48,7 +48,7 @@ def adduser():
     age = request.form['age']
     username = request.form['username']
     profile = {"name": pname, "username": username, "age": age, "location": location}
-    r.json().set("player:" + username, "$", profile)
+    r.hmset("player:" + username, profile)
     r.sadd("game:1", "player:" + username)
     return redirect(url_for('overview', username=username, location=location))
 
@@ -68,7 +68,7 @@ def leaderboard():
 @sock.route('/player/<username>')
 def playerMetadata(sock, username):
     print(username)
-    profile = r.json().get("player:" + username)
+    profile = r.hgetall("player:" + username)
     name = profile['name']
     location = profile['location']
     while True:
@@ -86,7 +86,7 @@ def getActivePlayers(sock):
         playerList = players[1]
         while cur != 0:
             for p in playerList:
-                profile = r.json().get(p)
+                profile = r.hgetall(p)
                 data = json.dumps({"username": profile['username'], "location": profile['location']})
                 sock.send(data)
             players = r.sscan("game:1", cursor=cur, count=2)
@@ -95,7 +95,7 @@ def getActivePlayers(sock):
 
         if cur == 0 and len(playerList) > 0:
             for p in playerList:
-                profile = r.json().get(p)
+                profile = r.hgetall(p)
                 data = json.dumps({"username": profile['username'], "location": profile['location']})
                 sock.send(data)
         time.sleep(10)
