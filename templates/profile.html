@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Welcome</title>
+    <title>User profile</title>
 
     <!-- Custom fonts for this template-->
     <link href="{{ url_for('static', filename = 'vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet" type="text/css">
@@ -33,7 +33,7 @@
             <li class="nav-item active">
                 <a class="nav-link" href="#">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>Player stats <br/>Location: {{location}}</span></a>
+                    <span>Player profile <br/>Location: {{location}}</span></a>
             </li>
 
             <!-- Divider -->
@@ -46,14 +46,8 @@
             </li>
 
             <li class="nav-item active">
-                <a class="nav-link" href="/profile?username={{username}}">
-<!--                    <i class="fas fa-fw fa-tachometer-alt"></i>-->
-                    <span>My profile</span></a>
-            </li>
-
-            <li class="nav-item active">
-                <a class="nav-link" href="/">
-                    <span>Add more player</span></a>
+                <a class="nav-link" href="/overview?username={{username}}">
+                    <span>Check score</span></a>
             </li>
 
         </ul>
@@ -89,44 +83,32 @@
 
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">Welcome to the playing arena</h1>
+                        <h1 class="h3 mb-0 text-gray-800">Player profile</h1>
                     </div>
 
                     <!-- Content Row -->
                     <div class="row">
-                        <div class="col-xl-6 col-md-6 mb-4">
-                            <div class="card border-left-primary shadow h-100 py-2">
-                                <div class="card-body">
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                                Player: {{username}}</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800" id="playerDetail"></div>
-                                        </div>
-                                        <div class="col-auto">
-                                            <i class="fas fa-calendar fa-2x text-gray-300"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
 
-                        <div class="col-xl-6 col-md-6 mb-4">
-                            <div class="card border-left-success shadow h-100 py-2">
-                                <div class="card-body">
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                                Your score</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800" id="score"></div>
-                                        </div>
-                                        <div class="col-auto">
-                                            <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                      <div class="col-md-6 mb-3">
+                        <label >Your full name <br/>(first name followed by last name)</label>
+                        <input type="text" class="form-control" value="{{name}}" readonly>
+                      </div>
+
+                      <div class="col-md-6 mb-3"></div>
+
+                      <div class="col-md-6 mb-3">
+                        <label >Display name/User name</label>
+                        <input type="text" class="form-control" value="{{username}}" readonly>
+                      </div>
+
+                        <div class="col-md-6 mb-3"></div>
+
+                      <div class="col-md-6 mb-3">
+                        <label >Age</label>
+                        <input type="number" class="form-control" value="{{age}}" readonly>
+                      </div>
+
+                      <div class="col-md-6 mb-3"></div>
 
                     </div>
 
@@ -150,8 +132,6 @@
 
     <!-- Custom scripts for all pages-->
     <script src="{{ url_for('static', filename = 'js/sb-admin-2.min.js') }}"></script>
-
-    <script src="{{ url_for('static', filename = 'js/demo/player.js') }}"></script>
 
 
 </body>

@@ -59,6 +59,17 @@ def overview():
         username = ''
     return render_template('overview.html', username=username, location=location)
 
+@app.route('/profile')
+def profile():
+    username = request.args.get('username')
+    if username is None:
+        username = ''
+    profile = r.hgetall("player:" + username)
+    name = profile['name']
+    location = profile['location']
+    age = profile['age']
+    return render_template('profile.html', username=username, location=location, age=age, name=name)
+
 
 @app.route('/leaderboard')
 def leaderboard():

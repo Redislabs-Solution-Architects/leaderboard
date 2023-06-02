@@ -4,7 +4,7 @@ fetchLeaderboardData();
 
 function fetchActivePlayers() {
     const socket = new WebSocket('ws://' + location.host + '/players');
-    text = '<li><a class="dropdown-item d-flex align-items-center gap-2 py-2" href="#">'
+    text = '<li><a class="dropdown-item d-flex align-items-center gap-2 py-2" href="/overview?username=plyr">'
         +'<span class="d-inline-block bg-success rounded-circle" style="width: .5em; height: .5em;"></span>plyr'
         +'<span class="badge bg-dark"> Location: loctn</span></a></li>'
     socket.addEventListener('message', ev => {
@@ -12,7 +12,7 @@ function fetchActivePlayers() {
         if (data.hasOwnProperty('_NODATA')) {
             $('#playerContainer').html('')
         } else {
-            replacedText = text.replace('plyr', data.username)
+            replacedText = text.replaceAll('plyr', data.username)
             replacedText = replacedText.replace('loctn', data.location)
             $('#playerContainer').append(replacedText)
         }
