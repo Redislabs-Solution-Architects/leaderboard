@@ -15,7 +15,7 @@ with open('./config/app-config.properties', 'rb') as config_file:
     configs.load(config_file)
 
 
-def playGame(stock):
+def playGame():
     endTime = time.time() + 60 * 15
     # Game will run for 15 min
     while time.time() < endTime:
@@ -34,7 +34,7 @@ if __name__ == '__main__':
     app = Flask(__name__)
     sock = Sock(app)
     location = os.getenv('LOCATION', "A")
-    t = threading.Thread(target=playGame, args=(location))
+    t = threading.Thread(target=playGame)
     t.start()
 
 
