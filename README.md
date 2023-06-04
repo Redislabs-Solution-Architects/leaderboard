@@ -21,4 +21,4 @@ Before running, set the following env variables like host, port, password and lo
 * Create Global LB (HTTP), required backend service and associate this backend service with above created instance-groups. Include both Beijing and Singapore instance groups
 * Goto browser and enter the LB IP address
 
-![](/Users/abhishek/apps/GCP/Gaming/leaderboard.png)
+![leaderboard](https://github.com/bestarch/leaderboard/assets/26322220/f956fc8a-6600-46b9-8884-f6e42783a364)
