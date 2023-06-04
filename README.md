@@ -1,20 +1,14 @@
 # leaderboard
 Distributed leaderboard using Redis Enterprise Actve-Active
 
-## Running application as a Python code
+## Running application 
 
-First set the env variables like host, port, password and location:
+Before running, set the following env variables like host, port, password and location:
 
     export HOST=redis-19781.c1.us-east1-2.gce.cloud.redislabs.com
     export PORT=19781
     export LOCATION=Mumbai
     export PASSWORD=eq71pQ1ewHOdLu1lBFL3haNEEWUvU3j8
-
-Finally, execute this:    
-
-    git clone https://github.com/Redislabs-Solution-Architects/leaderboard.git
-    cd leaderboard
-    pip install -r requirements.txt
 
 ## Running application behind GCP LB (Active-Active)
 
@@ -26,3 +20,5 @@ Finally, execute this:
 * Create respective instance groups for each of these instance templates (Beijing and Singapore)
 * Create Global LB (HTTP), required backend service and associate this backend service with above created instance-groups. Include both Beijing and Singapore instance groups
 * Goto browser and enter the LB IP address
+
+![](/Users/abhishek/apps/GCP/Gaming/leaderboard.png)
