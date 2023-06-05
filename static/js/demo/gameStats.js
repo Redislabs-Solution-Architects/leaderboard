@@ -1,6 +1,7 @@
 
 fetchActivePlayers();
 fetchLeaderboardData();
+fetchActiveRegionalPlayers();
 
 function fetchActivePlayers() {
     const socket = new WebSocket('ws://' + location.host + '/players');
@@ -17,7 +18,21 @@ function fetchActivePlayers() {
             $('#playerContainer').append(replacedText)
         }
     });
+}
 
+function fetchActiveRegionalPlayers() {
+    const socket3 = new WebSocket('ws://' + location.host + '/regional-players');
+    text3 = '<li><a class="dropdown-item d-flex align-items-center gap-2 py-2" href="/overview?username=plyer">'
+        +'<span class="d-inline-block bg-success rounded-circle" style="width: .5em; height: .5em;"></span>plyer</a></li>'
+    socket3.addEventListener('message', ev => {
+        data = JSON.parse(ev.data)
+        if (data.hasOwnProperty('_NODATA')) {
+            $('#regPlayerContainer').html('')
+        } else {
+            replacedText = text3.replaceAll('plyer', data.username)
+            $('#regPlayerContainer').append(replacedText)
+        }
+    });
 }
 
 function fetchLeaderboardData() {

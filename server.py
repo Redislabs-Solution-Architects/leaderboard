@@ -16,10 +16,10 @@ with open('./config/app-config.properties', 'rb') as config_file:
 
 
 def playGame():
-    endTime = time.time() + 60 * 15
-    # Game will run for 15 min
+    endTime = time.time() + 60 * 30
+    # Game will run for 30 min
     while time.time() < endTime:
-        players = r.smembers("game:1")
+        players = r.smembers("game:1:global")
         for player in players:
             generatedScore = random.randint(1, 1000)
             r.zadd("leaderboard", {player: generatedScore})
@@ -49,7 +49,8 @@ def adduser():
     username = request.form['username']
     profile = {"name": pname, "username": username, "age": age, "location": location}
     r.hmset("player:" + username, profile)
-    r.sadd("game:1", "player:" + username)
+    r.sadd("game:1:global", "player:" + username)
+    r.sadd("game:1:"+location, "player:" + username)
     return redirect(url_for('overview', username=username, location=location))
 
 @app.route('/overview')
@@ -92,7 +93,7 @@ def playerMetadata(sock, username):
 @sock.route('/players')
 def getActivePlayers(sock):
     while True:
-        players = r.sscan("game:1", cursor=0, count=2)
+        players = r.sscan("game:1:global", cursor=0, count=2)
         cur = players[0]
         playerList = players[1]
         while cur != 0:
@@ -100,7 +101,31 @@ def getActivePlayers(sock):
                 profile = r.hgetall(p)
                 data = json.dumps({"username": profile['username'], "location": profile['location']})
                 sock.send(data)
-            players = r.sscan("game:1", cursor=cur, count=2)
+            players = r.sscan("game:1:global", cursor=cur, count=2)
+            cur = players[0]
+            playerList = players[1]
+
+        if cur == 0 and len(playerList) > 0:
+            for p in playerList:
+                profile = r.hgetall(p)
+                data = json.dumps({"username": profile['username'], "location": profile['location']})
+                sock.send(data)
+        time.sleep(10)
+        sock.send(json.dumps({"_NODATA": "_NODATA"}))
+
+
+@sock.route('/regional-players')
+def getRegionalActivePlayers(sock):
+    while True:
+        players = r.sscan("game:1:"+location, cursor=0, count=2)
+        cur = players[0]
+        playerList = players[1]
+        while cur != 0:
+            for p in playerList:
+                profile = r.hgetall(p)
+                data = json.dumps({"username": profile['username'], "location": profile['location']})
+                sock.send(data)
+            players = r.sscan("game:1:"+location, cursor=cur, count=2)
             cur = players[0]
             playerList = players[1]
 
