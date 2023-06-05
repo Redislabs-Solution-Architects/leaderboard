@@ -34,6 +34,10 @@
           font-size: 3.5rem;
         }
       }
+
+      .bgcolor {
+        background-color: #eaecf4;
+      }
     </style>
 
 
@@ -103,15 +107,13 @@
 
                     <!-- Content Row -->
                     <div class="row">
+
                         <div class="col-xl-6 col-md-6 mb-4">
-
                             <div class="card border-left-primary">
-
                                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                    <h6 class="m-0 font-weight-bold text-primary">Players Online </h6>
+                                    <h6 class="m-0 font-weight-bold text-primary">Players online globally</h6>
                                 </div>
-
-                               <ul class="list-unstyled mb-0" id="playerContainer">
+                               <ul class="list-unstyled mb-0 bgcolor" id="playerContainer">
                                </ul>
                             </div>
                         </div>
@@ -119,13 +121,24 @@
                          <div class="col-xl-6 col-lg-10">
                             <div class="card shadow mb-4">
                                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                    <h6 class="m-0 font-weight-bold text-primary">Top 10 players </h6>
+                                    <h6 class="m-0 font-weight-bold text-primary">Top 10 players globally</h6>
                                 </div>
-
-                                <ul class="list-unstyled mb-0" id="leaderboardContainer">
+                                <ul class="list-unstyled mb-0 bgcolor" id="leaderboardContainer">
                                 </ul>
                             </div>
                         </div>
+
+                        <div class="col-xl-6 col-md-6 mb-4">
+                            <div class="card border-left-primary">
+                                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                                    <h6 class="m-0 font-weight-bold text-primary">Players online in your region</h6>
+                                </div>
+                               <ul class="list-unstyled mb-0 bgcolor" id="regPlayerContainer">
+                               </ul>
+                            </div>
+                        </div>
+
+
 
                     </div>
 
