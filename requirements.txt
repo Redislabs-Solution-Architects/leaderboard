@@ -3,3 +3,4 @@ pandas~=2.2.2
 Flask==3.0.2
 flask-sock==0.5.2
 jproperties==2.1.1
+numpy~=2.0.1
