@@ -1,4 +1,4 @@
-FROM python:3.7-bullseye
+FROM python:3.11.8-bullseye
 WORKDIR /app
 COPY requirements.txt requirements.txt
 RUN pip3 install -r requirements.txt

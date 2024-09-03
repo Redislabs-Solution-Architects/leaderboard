@@ -36,7 +36,7 @@ function fetchActiveRegionalPlayers() {
 }
 
 function fetchLeaderboardData() {
-    const socket2 = new WebSocket('ws://' + location.host + '/game/01/leaderboard');
+    const socket2 = new WebSocket('ws://' + location.host + '/game/leaderboard');
     $('#leaderboardContainer').html('')
     text2 = '<li><a class="dropdown-item d-flex align-items-center gap-2 py-2" href="#"><span class="d-inline-block bg-success rounded-circle" style="width: .5em; height: .5em;"></span>player<span class="badge rounded-pill bg-info text-dark"> score</span></a></li>'
     socket2.addEventListener('message', ev => {

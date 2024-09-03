@@ -10,16 +10,12 @@ import random
 
 global app
 
-configs = Properties()
-with open('./config/app-config.properties', 'rb') as config_file:
-    configs.load(config_file)
-
 
 def playGame():
     endTime = time.time() + 60 * 30
     # Game will run for 30 min
     while time.time() < endTime:
-        players = r.smembers("game:1:global")
+        players = r.smembers("game:global")
         for player in players:
             generatedScore = random.randint(1, 1000)
             r.zadd("leaderboard", {player: generatedScore})
@@ -33,7 +29,7 @@ if __name__ == '__main__':
                     decode_responses=True)
     app = Flask(__name__)
     sock = Sock(app)
-    location = os.getenv('LOCATION', "A")
+    location = os.getenv('LOCATION', "ARENA1")
     t = threading.Thread(target=playGame)
     t.start()
 
@@ -49,19 +45,29 @@ def adduser():
     username = request.form['username']
     profile = {"name": pname, "username": username, "age": age, "location": location}
     r.hmset("player:" + username, profile)
-    r.sadd("game:1:global", "player:" + username)
-    r.sadd("game:1:"+location, "player:" + username)
-    return redirect(url_for('overview', username=username, location=location))
+    r.sadd("game:global", "player:" + username)
+    r.sadd("game:"+location, "player:" + username)
+    #return redirect(url_for('overview', username=username, location=location))
+    return redirect(url_for('leaderboard', location=location))
 
 @app.route('/overview')
 def overview():
+    """
+    Ideally, user should be redirected to this overview page whenever registration is
+    successful. But, currently, the user is being redirected to 'leaderboard' page after every
+    successful registration.
+    """
     username = request.args.get('username')
     if username is None:
         username = ''
     return render_template('overview.html', username=username, location=location)
 
+
 @app.route('/profile')
 def profile():
+    """
+    Get profile of a registered user
+    """
     username = request.args.get('username')
     if username is None:
         username = ''
@@ -79,6 +85,9 @@ def leaderboard():
 
 @sock.route('/player/<username>')
 def playerMetadata(sock, username):
+    """
+    This API is called for a user from the overview page
+    """
     print(username)
     profile = r.hgetall("player:" + username)
     name = profile['name']
@@ -93,7 +102,7 @@ def playerMetadata(sock, username):
 @sock.route('/players')
 def getActivePlayers(sock):
     while True:
-        players = r.sscan("game:1:global", cursor=0, count=2)
+        players = r.sscan("game:global", cursor=0, count=2)
         cur = players[0]
         playerList = players[1]
         while cur != 0:
@@ -101,7 +110,7 @@ def getActivePlayers(sock):
                 profile = r.hgetall(p)
                 data = json.dumps({"username": profile['username'], "location": profile['location']})
                 sock.send(data)
-            players = r.sscan("game:1:global", cursor=cur, count=2)
+            players = r.sscan("game:global", cursor=cur, count=2)
             cur = players[0]
             playerList = players[1]
 
@@ -117,7 +126,7 @@ def getActivePlayers(sock):
 @sock.route('/regional-players')
 def getRegionalActivePlayers(sock):
     while True:
-        players = r.sscan("game:1:"+location, cursor=0, count=2)
+        players = r.sscan("game:"+location, cursor=0, count=2)
         cur = players[0]
         playerList = players[1]
         while cur != 0:
@@ -125,7 +134,7 @@ def getRegionalActivePlayers(sock):
                 profile = r.hgetall(p)
                 data = json.dumps({"username": profile['username'], "location": profile['location']})
                 sock.send(data)
-            players = r.sscan("game:1:"+location, cursor=cur, count=2)
+            players = r.sscan("game:"+location, cursor=cur, count=2)
             cur = players[0]
             playerList = players[1]
 
@@ -138,7 +147,7 @@ def getRegionalActivePlayers(sock):
         sock.send(json.dumps({"_NODATA": "_NODATA"}))
 
 
-@sock.route('/game/01/leaderboard')
+@sock.route('/game/leaderboard')
 def getLeaderboard(sock):
     while True:
         lb = r.zrange("leaderboard", start=0, end=9, desc=True, withscores=True)
